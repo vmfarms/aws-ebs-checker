@@ -140,6 +140,10 @@ class CheckEBSSnapshots extends Console\Command\Command {
 		# Now iterate over the volumes checking status
 		$_volumes = $result['Volumes'];
 		foreach($_volumes as $vol){
+      # Ignore all root volumes
+      if (preg_match('/\/dev\/(xv|s)da1/', $vol['Attachments'][0]['Device'])) {
+        continue;
+      }
 
 			unset($dates);
 			# create an array to filter snapshots
